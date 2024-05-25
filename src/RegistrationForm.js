@@ -1,4 +1,5 @@
 import  {useState}  from "react";
+import "./Registration.css";
 
 const RegistrationForm = () => {
 
@@ -16,8 +17,9 @@ const RegistrationForm = () => {
         e.preventDefault();
     }
     
-    return (
+    return ( 
     <div className="form-container">
+        <h1>Regester</h1>
     <form onSubmit={handleSubmit}>
         <label>
             <input 
@@ -50,21 +52,21 @@ const RegistrationForm = () => {
 
             <input 
             type="text"
-            name="fname"
-            value={inputs.name}
+            name="streetAddress"
+            value={inputs.streetAddress}
             onChange={handleChange}
-            placeholder="First Name"
+            placeholder="Street Address"
             />
         </label>
         <label>
             <input 
             type="text"
-            name="email"
-            value={inputs.email}
+            name="school"
             onChange={handleChange}
-            placeholder="Email Address"
+            placeholder="School "
             />
         </label>
+        <br/>
         <button type="submit">Submit</button>
     </form>
     </div>)

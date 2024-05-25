@@ -1,0 +1,58 @@
+body {
+  background-image: url('./concert3.jpg');
+  background-size: cover;
+  background-position: center;
+  position: relative;
+  height: 100vh;
+}
+
+h1 {
+  font-size: 40px;
+  color: white;
+  font-family: 'Times New Roman', Times, serif;
+  text-align: center;
+}
+.form-container{
+    background-color:  rgba(189, 189, 241, 0.3);
+    max-width: 35vw;
+    text-align: center;
+    position: relative;
+    left: 33vw;
+    top: 25vh;
+    border-radius: 12px;
+  }
+  
+  .form-container input{
+    padding: 10px;
+    margin: 10px;
+    border: none;
+    border-radius: 4px;
+    width: 25vw;
+    font-size: 15px;
+  }
+
+  button {
+    background-color: rgb(26, 202, 179);
+    color: #fff;
+    font-size: 15px;
+    cursor: pointer;
+    border: none;
+    border-radius: 4px;
+    padding: 10px;
+    margin: 10px;
+    width: 26vw;
+  }
+
+  button:hover {
+    background-color: rgb(139, 223, 211);
+    color: #fff;
+  }
+
+  button:active {
+    position: relative;
+    width: 25vw;
+    border: none;
+    border-radius: 4px;
+    background-color: rgb(26, 202, 179);
+    color: #fff;
+  }

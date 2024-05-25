@@ -29,7 +29,7 @@
   position: relative;
   top: 160px;
   left: 36vw;
-  width: 25%;
+  width: 25vw;
   padding: 10px;
   border: none;
   border-radius: 4px;
@@ -45,19 +45,11 @@
 }
 
 .regester-btn:active {
+  position: relative;
+  width: 24vw;
   background-color: rgb(202, 238, 233);
   color: #fff;
 }
 
-.form-container{
-  background-color: rgb(250, 147, 51);
-  max-width: 300px;
-  position: relative;
-  top: 160px;
-  left: 200px;
-}
 
-form{
-  padding: 10px;
-}
 
