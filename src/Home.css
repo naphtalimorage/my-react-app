@@ -1,36 +1,42 @@
-.App {
-  background-image: url('./concer2.jpg');
+@font-face {
+  font-family: "Regular";   /*Can be any text*/
+  src: local("PoppinsRegular"),
+    url("./fonts/PoppinsRegular.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Black";   /*Can be any text*/
+  src: local("PoppinsBlack"),
+    url("./fonts/PoppinsBlack.ttf") format("truetype");
+}
+
+body {
+  background-image: url('./concert3.jpg');
   background-size: cover;
   background-position: center;
-  position: relative;
-  bottom: 28px;
   height: 100vh;
+}
+
+.App {
+  position: relative;
+  top: 30vh;
 }
 
 .first-header {
   font-size: 40px;
   color: #fff;
-  text-align: center;
-  position: relative;
-  top: 80px;
-  font-family: 'Times New Roman', Times, serif;
+  font-family:'Black';
 }
 
 .second-header {
   font-size: 40px;
   color: #fff;
-  text-align: center;
-  position: relative;
-  top: 40px;
-  font-family:'Times New Roman', Times, serif;
+  font-family:'Regular';
 }
 
 .regester-btn {
   position: relative;
-  top: 160px;
-  left: 36vw;
-  width: 25vw;
-  padding: 10px;
+  left: 35vw;
   border: none;
   border-radius: 4px;
   background-color: rgb(26, 202, 179);
