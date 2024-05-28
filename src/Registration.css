@@ -6,20 +6,21 @@ body {
   height: 100vh;
 }
 
+
 h1 {
   font-size: 40px;
   color: white;
-  font-family: 'Times New Roman', Times, serif;
+  font-family: '';
   text-align: center;
 }
+
 .form-container{
     background-color:  rgba(189, 189, 241, 0.3);
-    max-width: 35vw;
+    width: 35vw;
     text-align: center;
+    border-radius: 12px;
     position: relative;
     left: 33vw;
-    top: 25vh;
-    border-radius: 12px;
   }
   
   .form-container input{
@@ -34,7 +35,7 @@ h1 {
   button {
     background-color: rgb(26, 202, 179);
     color: #fff;
-    font-size: 15px;
+    font-size: 17px;
     cursor: pointer;
     border: none;
     border-radius: 4px;
@@ -55,4 +56,21 @@ h1 {
     border-radius: 4px;
     background-color: rgb(26, 202, 179);
     color: #fff;
+  }
+
+  #currentStatus {
+    width: 26.5vw;
+    padding: 10px;
+    margin: 10px;
+    border: none;
+    border-radius: 4px;
+    font-size: 15px;
+}
+
+  #paymentMethod {
+    width: 26.5vw;
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    font-size: 15px;
   }
