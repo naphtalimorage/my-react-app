@@ -7,12 +7,42 @@ input{
     font-size: 14px;
 }
 
+.select-1 {
+    padding: 12px; 
+    margin: 5px;
+    width: 310px;
+    border: 1px solid grey;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.select-2 {
+    padding: 12px;
+    margin: 5px;
+    width: 310px;
+    border: 1px solid grey;
+    border-radius: 4px;
+    font-size: 14px;
+    position: relative;
+    bottom: 20px;  
+}
+
 span {
     color: red;
-    font-size: 10px;
-    display: none;
+    font-size: 12px;
+    position: relative;
+    bottom: 7px;
+    right: 90px;
+
 }
 
 input:invalid ~ span {
     display: block;
 }
+
+
+/*const [focused, setFocused] = useState(false);
+
+const handleFocus = () => {
+  setFocused(true);
+};*/

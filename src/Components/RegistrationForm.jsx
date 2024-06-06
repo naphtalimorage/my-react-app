@@ -1,5 +1,7 @@
-/*import { useState } from "react";
+import { useState } from "react";
 import "./Registration.css";
+import "./FormInputs.css";
+import Validation from "./Validation";
 
 const RegistrationForm = () => {
   const [inputs, setInputs] = useState({
@@ -15,81 +17,26 @@ const RegistrationForm = () => {
 
   const [errors, setErrors] = useState({});
 
-  const validate = () => {
-    const errors = {};
-
-    // Validate fname
-    if (!inputs.fname) {
-      errors.fname = "First Name is required";
-    } else if (inputs.fname.length >= 15) {
-      errors.fname = "Name should be at most 14 characters long";
-    }
-  
-
-    // Validate lname
-    if (!inputs.lname) {
-      errors.lname = "Last Name is required";
-    } else if (inputs.lname.length >= 15) {
-      errors.lname = "Name should be at most 14 characters long";
-    }
-
-    // Validate emailaddress
-    if (!inputs.emailaddress) {
-      errors.emailaddress = "Email is required";
-    } else if (!/\S+@\S+\.\S+/.test(inputs.emailaddress)) {
-      errors.emailaddress = "Invalid email address";
-    }
-
-    // Validate streetaddress
-    if (!inputs.streetaddress) {
-      errors.streetaddress = "Street Address is required";
-    }
-
-    // Validate date
-    if (!inputs.date) {
-      errors.date = "Date is required";
-    }
-
-    // Validate school
-    if (!inputs.school) {
-      errors.school = "School is required";
-    }
-
-    // Validate currentStatus
-    if (!inputs.currentStatus) {
-      errors.currentStatus = "Status is required";
-    }
-
-    // Validate paymentMethod
-    if (!inputs.paymentMethod) {
-      errors.paymentMethod = "Payment Method is required";
-    }
-
-
-    for (const inputs in errors) {
-      if (errors.hasOwnProperty(inputs)) {
-        setErrors({ [inputs]: errors[inputs] });
-        return false; // Return false to indicate validation failure
-      }
-    }
-
-    setErrors({});
-    return true;
-  };
-
   const handleChange = (e) => {
     const { name, value } = e.target;
     setInputs({ ...inputs, [name]: value });
-    
   };
 
-  
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (validate()) {
-      console.log("Valid data", inputs);
-    } else {
-      console.log("Invalid data", errors);
+    setErrors(Validation(inputs));
+    try {
+      const response = await fetch("/register", {
+        method: "POST",
+        headers: {
+          "content-Type": "application/json",
+        },
+        body: JSON.stringify(inputs),
+      });
+      const data = await response.json();
+      console.log(data);
+    } catch (err) {
+      console.log(`Error submitting the form ${err}`);
     }
   };
 
@@ -101,94 +48,82 @@ const RegistrationForm = () => {
           <input
             id="fname"
             type="text"
-            name="fname"
             value={inputs.fname}
+            name="fname"
             onChange={handleChange}
             placeholder="First Name"
-            maxLength="15"
-            
+            // onBlur={handleFocus}
+            // focused = {focused.toString()}
           />
           <br />
-          {errors.fname && (
-            <small className="error-Message">{errors.fname}</small>
-          )}
+          {errors.fname && <span>{errors.fname}</span>}
         </div>
         <div>
           <input
             id="lname"
             type="text"
+            value={inputs.fname}
             name="lname"
-            value={inputs.lname}
             onChange={handleChange}
             placeholder="Last Name"
-            maxLength="15"
           />
           <br />
-          {errors.lname && (
-            <small className="error-Message">{errors.lname}</small>
-          )}
+          {errors.lname && <span>{errors.lname}</span>}
         </div>
         <div>
           <input
             id="emailaddress"
             type="text"
-            name="emailaddress"
             value={inputs.emailaddress}
+            name="emailaddress"
             onChange={handleChange}
             placeholder="Email Address"
           />
           <br />
-          {errors.emailaddress && (
-            <small className="error-Message">{errors.emailaddress}</small>
-          )}
+          {errors.emailaddress && <span>{errors.emailaddress}</span>}
         </div>
         <div>
           <input
             id="streetaddress"
             type="text"
-            name="streetaddress"
             value={inputs.streetaddress}
+            name="streetaddress"
             onChange={handleChange}
             placeholder="Street Address"
           />
           <br />
-          {errors.streetaddress && (
-            <small className="error-Message">{errors.streetaddress}</small>
-          )}
+          {errors.streetaddress && <span>{errors.streetaddress}</span>}
         </div>
         <div>
           <input
             id="date"
             type="date"
-            name="date"
             value={inputs.date}
+            name="date"
             onChange={handleChange}
           />
           <br />
-          {errors.date && (
-            <small className="error-Message">{errors.date}</small>
-          )}
+          {errors.date && <span>{errors.date}</span>}
         </div>
         <div>
           <input
             id="school"
             type="text"
-            name="school"
             value={inputs.school}
+            name="school"
             onChange={handleChange}
             placeholder="School"
           />
           <br />
-          {errors.school && (
-            <small className="error-Message">{errors.school}</small>
-          )}
+          {errors.school && <span>{errors.school}</span>}
         </div>
         <div className="selection1">
           <select
             id="currentStatus"
             name="currentStatus"
-            value={inputs.currentStatus}
+            value={inputs.customElements}
             onChange={handleChange}
+            className="select-1"
           >
             <option value="">Select your status</option>
             <option value="undergraduate student">Undergraduate Student</option>
@@ -197,17 +132,16 @@ const RegistrationForm = () => {
             <option value="industry employee">Industry Employee</option>
           </select>
           <br />
-          {errors.currentStatus && (
-            <small className="error-Message">{errors.currentStatus}</small>
-          )}
+          {errors.currentStatus && <span>{errors.currentStatus}</span>}
         </div>
         <br />
-        <div className="selection2">
+        <div className="selection-2">
           <select
             id="paymentMethod"
             name="paymentMethod"
             value={inputs.paymentMethod}
             onChange={handleChange}
+            className="select-2"
           >
             <option value="">Payment Method</option>
             <option value="credit card">Credit Card</option>
@@ -216,7 +150,7 @@ const RegistrationForm = () => {
           </select>
           <br />
           {errors.paymentMethod && (
-            <small className="error-Message">{errors.paymentMethod}</small>
+            <span style={{ marginleft: "20px" }}>{errors.paymentMethod}</span>
           )}
         </div>
         <br />
@@ -226,8 +160,9 @@ const RegistrationForm = () => {
   );
 };
 
-export default RegistrationForm;*/
-import "./Registration.css";
+export default RegistrationForm;
+
+/*import "./Registration.css";
 import FormInputs from "./FormInputs";
 import { useState } from "react";
 
@@ -250,6 +185,8 @@ const RegistrationForm = () => {
       type: "text",
       placeholder: "First Name",
       errorMessage: "First Name is required",
+      pattern: "^[A-Za-z0-9][3,16]$",
+      required: true,
     },
     {
       id: 2,
@@ -257,6 +194,7 @@ const RegistrationForm = () => {
       type: "text",
       placeholder: "Last Name",
       errorMessage: "Last Name is required",
+      required: true,
     },
     {
       id: 3,
@@ -313,7 +251,7 @@ const RegistrationForm = () => {
 
   const handleChange = (event) => {
     const {name, value} = event.target;
-    setValues({ ...values, [name]: value });
+    setValues({ ...values, [name]: value});
   };
 
   console.log(values);
@@ -336,3 +274,4 @@ const RegistrationForm = () => {
 };
 
 export default RegistrationForm;
+*/
