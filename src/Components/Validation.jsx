@@ -24,7 +24,7 @@ const Validation =  (inputs) => {
 
     if(inputs.emailaddress === ""){
       errors.emailaddress = "email address is required";
-    } else if(!emailRegex.test(inputs.emailaddress)){
+    } else if(emailRegex.test(inputs.emailaddress)){
       errors.emailaddress = "Invalid email address";
     }
 
