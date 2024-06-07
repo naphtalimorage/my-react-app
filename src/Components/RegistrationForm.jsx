@@ -62,7 +62,7 @@ const RegistrationForm = () => {
           <input
             id="lname"
             type="text"
-            value={inputs.fname}
+            value={inputs.lname}
             name="lname"
             onChange={handleChange}
             placeholder="Last Name"
