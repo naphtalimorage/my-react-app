@@ -22,29 +22,28 @@ connection.connect((err) => {
 });
 
 app.post('/register', (req, res) => {
-    const {
-        fname,
-        lname,
-        emailaddress,
-        streetaddress,
-        date,
-        school,
-        currentStatus,
-        paymentMethod} = req.body;
+    const {fname,lname,emailaddress,streetaddress,date,school,currentStatus,paymentMethod} = req.body;
+
+    
+    if(!fname || !lname || !emailaddress ||!streetaddress || !date || !school || !currentStatus || !paymentMethod){
+        console.log("All Fields are required!");
+        return res.status(400).json({error: 'All Fields are required!'});
+      } 
+
     const sql = 'INSERT INTO usersdata (fname,lname,emailaddress,streetaddress,date,school,currentStatus,paymentMethod) VALUES (?,?,?,?,?,?,?,?)';
     const values = [fname,lname,emailaddress,streetaddress,date,school,currentStatus,paymentMethod];
-
+    
+      
     connection.query(sql, values, (err, result) => {
         if(err) {
             console.error(`Error inserting users-data ${err}`);
-            res.status(500).json({error: 'error inserting users-data'});
-            return;
+            return  res.status(500).json({error: 'error inserting users-data'});
         }
-
         console.log(`Users inserted`);
-        res.status(200).json({message: 'User registered successfully'});
-    });
+        return res.status(200).json({message: 'User registered successfully'});
 
+    });
+  
 });
 
 
