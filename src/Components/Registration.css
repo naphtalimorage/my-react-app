@@ -28,7 +28,7 @@ form{
   text-align: center;
   border-radius: 4px;
   position: relative;
-  top: 30px;
+  top: 20px;
 }
 
 button {
@@ -57,4 +57,11 @@ button {
     border-radius: 4px;
     background-color: rgb(26, 202, 179);
     color: #fff;
+  }
+
+  span {
+    display: flex;
+    flex-direction: column;
+    margin-left: 20px;
+    margin-top: 6px;
   }
