@@ -1,7 +1,6 @@
 import { useState } from "react";
 import "./Registration.css";
 import "./FormInputs.css";
-import Validation from "./Validation";
 
 const RegistrationForm = () => {
   const [inputs, setInputs] = useState({
@@ -15,21 +14,47 @@ const RegistrationForm = () => {
     paymentMethod: "",
   });
 
-  const [errors, setErrors] = useState({});
+  const [errors, setErrors]= useState({});
+  const [focused, setFocused]= useState({});
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setInputs({ ...inputs, [name]: value });
+  const handleBlur = (event) => {
+    const {name, value}= event.target;
+    let newErrors = {...errors};
+
+    if(!value) {
+      newErrors[name] = `The above field is Required`;
+    } else {
+      delete newErrors[name];
+    }
+
+    setErrors(newErrors);
   };
 
+  const handleFocus = (event) => {
+    const {name}= event.target;
+    setFocused({...focused, [name]: true});
+
+
+    let newErrors = {...errors};
+    delete newErrors[name];
+    setErrors(newErrors);
+  }
+
+  const handleChange = (event) => {
+    const {name,value}= event.target;
+    setInputs({...inputs, [name]: value});
+  }
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setErrors(Validation(inputs));
+    // Validation logic
+    // setErrors(Validation(inputs));
+
     try {
       const response = await fetch("/register", {
         method: "POST",
         headers: {
-          "content-Type": "application/json",
+          "Content-Type": "application/json",
         },
         body: JSON.stringify(inputs),
       });
@@ -52,11 +77,11 @@ const RegistrationForm = () => {
             name="fname"
             onChange={handleChange}
             placeholder="First Name"
-            // onBlur={handleFocus}
-            // focused = {focused.toString()}
+            onBlur={handleBlur}
+            onFocus={handleFocus}
           />
           <br />
-          {errors.fname && <span>{errors.fname}</span>}
+          {errors.fname && focused.fname && <span>{errors.fname}</span>}
         </div>
         <div>
           <input
@@ -66,9 +91,11 @@ const RegistrationForm = () => {
             name="lname"
             onChange={handleChange}
             placeholder="Last Name"
+            onBlur={handleBlur}
+            onFocus={handleFocus}
           />
           <br />
-          {errors.lname && <span>{errors.lname}</span>}
+          {errors.lname && focused.lname && <span>{errors.lname}</span>}
         </div>
         <div>
           <input
@@ -78,9 +105,11 @@ const RegistrationForm = () => {
             name="emailaddress"
             onChange={handleChange}
             placeholder="Email Address"
+            onBlur={handleBlur}
+            onFocus={handleFocus}
           />
           <br />
-          {errors.emailaddress && <span>{errors.emailaddress}</span>}
+          {errors.emailaddress && focused.emailaddress && <span>{errors.emailaddress}</span>}
         </div>
         <div>
           <input
@@ -90,9 +119,11 @@ const RegistrationForm = () => {
             name="streetaddress"
             onChange={handleChange}
             placeholder="Street Address"
+            onBlur={handleBlur}
+            onFocus={handleFocus}
           />
           <br />
-          {errors.streetaddress && <span>{errors.streetaddress}</span>}
+          {errors.streetaddress && focused.streetaddress && <span>{errors.streetaddress}</span>}
         </div>
         <div>
           <input
@@ -101,9 +132,11 @@ const RegistrationForm = () => {
             value={inputs.date}
             name="date"
             onChange={handleChange}
+            onBlur={handleBlur}
+            onFocus={handleFocus}
           />
           <br />
-          {errors.date && <span>{errors.date}</span>}
+          {errors.date && focused.date && <span>{errors.date}</span>}
         </div>
         <div>
           <input
@@ -113,17 +146,21 @@ const RegistrationForm = () => {
             name="school"
             onChange={handleChange}
             placeholder="School"
+            onBlur={handleBlur}
+            onFocus={handleFocus}
           />
           <br />
-          {errors.school && <span>{errors.school}</span>}
+          {errors.school && focused.school && <span>{errors.school}</span>}
         </div>
         <div className="selection1">
           <select
             id="currentStatus"
             name="currentStatus"
-            value={inputs.customElements}
+            value={inputs.currentStatus}
             onChange={handleChange}
             className="select-1"
+            onBlur={handleBlur}
+            onFocus={handleFocus}
           >
             <option value="">Select your status</option>
             <option value="undergraduate student">Undergraduate Student</option>
@@ -132,7 +169,7 @@ const RegistrationForm = () => {
             <option value="industry employee">Industry Employee</option>
           </select>
           <br />
-          {errors.currentStatus && <span>{errors.currentStatus}</span>}
+          {errors.currentStatus && focused.currentStatus && <span>{errors.currentStatus}</span>}
         </div>
         <br />
         <div className="selection-2">
@@ -142,6 +179,8 @@ const RegistrationForm = () => {
             value={inputs.paymentMethod}
             onChange={handleChange}
             className="select-2"
+            onBlur={handleBlur}
+            onFocus={handleFocus}
           >
             <option value="">Payment Method</option>
             <option value="credit card">Credit Card</option>
@@ -149,9 +188,7 @@ const RegistrationForm = () => {
             <option value="paypal">Paypal</option>
           </select>
           <br />
-          {errors.paymentMethod && (
-            <span style={{ marginleft: "20px" }}>{errors.paymentMethod}</span>
-          )}
+          {errors.paymentMethod && focused.paymentMethod && <span>{errors.paymentMethod}</span>}
         </div>
         <br />
         <button type="submit">Submit</button>
@@ -162,116 +199,3 @@ const RegistrationForm = () => {
 
 export default RegistrationForm;
 
-/*import "./Registration.css";
-import FormInputs from "./FormInputs";
-import { useState } from "react";
-
-const RegistrationForm = () => {
-  const [values, setValues] = useState({
-    fname: "",
-    lname: "",
-    emailaddress: "",
-    streetaddress: "",
-    date: "",
-    school: "",
-    currentStatus: "",
-    paymentMethod: "",
-  });
-
-  const inputs = [
-    {
-      id: 1,
-      name: "fname",
-      type: "text",
-      placeholder: "First Name",
-      errorMessage: "First Name is required",
-      pattern: "^[A-Za-z0-9][3,16]$",
-      required: true,
-    },
-    {
-      id: 2,
-      name: "lname",
-      type: "text",
-      placeholder: "Last Name",
-      errorMessage: "Last Name is required",
-      required: true,
-    },
-    {
-      id: 3,
-      name: "emailaddress",
-      type: "email",
-      placeholder: "Email Address",
-      errorMessage: "Email Address is required",
-      required: true,
-    },
-    {
-      id: 4,
-      name: "streetaddress",
-      type: "text",
-      placeholder: "Street Address",
-      errorMessage: "Street Address is required",
-      required: true,
-    },
-    {
-      id: 5,
-      name: "date",
-      type: "date",
-      placeholder: "Date",
-      errorMessage: "Date is required",
-    },
-    {
-      id: 6,
-      name: "school",
-      type: "text",
-      placeholder: "School",
-      errorMessage: "school name is required",
-      required: true,
-    },
-    {
-      id: 7,
-      name: "currentStatus",
-      type: "select",
-      placeholder: "Status",
-      errorMessage: "Current status is required",
-      required: true,
-    },
-    {
-      id: 8,
-      name: "paymentMethod",
-      type: "select",
-      placeholder: "Payment Method",
-      errorMessage: "Payment Method is required",
-      required: true,
-    }
-  ];
-
-  const handleSubmit = (event) => {
-    event.preventDefault();
-  };
-
-  const handleChange = (event) => {
-    const {name, value} = event.target;
-    setValues({ ...values, [name]: value});
-  };
-
-  console.log(values);
-  return (
-    <div className="registrationForm">
-      <form onSubmit={handleSubmit}>
-        <h1>Register</h1>
-        {inputs.map((input) => (
-          <FormInputs
-            key={input.id}
-            {...input}
-            value={values[input.name]}
-            onChange={handleChange}
-          />
-        ))}
-        <button>Submit</button>
-      </form>
-    </div>
-  );
-};
-
-export default RegistrationForm;
-*/
