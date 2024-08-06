@@ -47,8 +47,6 @@ const RegistrationForm = () => {
   
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // Validation logic
-    // setErrors(Validation(inputs));
 
     try {
       const response = await fetch("/register", {
@@ -59,7 +57,6 @@ const RegistrationForm = () => {
         body: JSON.stringify(inputs),
       });
       const data = await response.json();
-      console.log(data);
     } catch (err) {
       console.log(`Error submitting the form ${err}`);
     }

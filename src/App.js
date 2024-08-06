@@ -5,7 +5,7 @@ import RegistrationForm from "./Components/RegistrationForm";
 
 
 const App = () => {
-  return (
+  return ( 
     <div className="app">
       <Router>
             <Routes>
